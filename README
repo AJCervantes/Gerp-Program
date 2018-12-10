@@ -1,0 +1,104 @@
+/**********************************
+ * Project 2: grep
+ * Comp 15 Fall 2018 
+ * 
+ * Author: Andrew Cervantes
+ * Matias Korman
+ *
+ ********************************/
+all files listed below were 
+written by:  Matias Korman
+
+FSTree.h	: interface of FSTree class
+FSTree.o	: compiled version of FSTree.cpp
+DirNode.h 	: interface of DirNode class
+DirNode.o 	: compiled version of DirNode.cpp
+the_gerp	: compiled solution of this assignment
+sampleExecution : files to test your program
+test-dirs 	: simple template stack class used for DFS
+
+
+Description of author's work below:
+
+Project 2 week 2 Documentation:
+
+Goal: The overall goal of the program is to index a directory of files and 
+then search for a word's location in the file.
+
+Help: Paul Lutkus and Jonathon Vithoontien and I cooperated in thinking of
+the way to store the data when indexing the files.
+
+Other Files:
+
+Hash.h: A header file that contains the data pertaining to performing the
+hash, inserting, and searching.
+Hash.cpp: contains the functions needed to index and query using the hash
+method.
+
+FSTreeTraversal.h: header file containing fucntions pertaining to the
+running of the priogram.
+FSTreeTraversal.cpp" Contains the functions needed to run the program,
+sort through the directory, and processes strings.
+
+main.cpp: file that takes in the inout argument and calls run in
+FSTreeTraversal.
+
+to compile:
+Run the command 'make gerp' in the command line to open the Makefile
+and compile the program.
+
+to execute:
+Run the command './gerp [directory]' in which directory is a directory
+of files and subdirectories. Only 1 parameter will work for this 
+program.
+
+Data Structures:
+For this program, the database of words is a hash, in which each
+location in the array holds a vector<NodeType>. Each node in the vector
+is a unique word and contains a secondary vector<string> which holds
+every location that the word is utilized in the files.For this program,
+the goal was to create an index that was quick with only little regard
+for memory usage. Because of this, the hash dynamic array with a large
+initial size was best, because when the array doesn't have to expand
+the insert is constant time, and the search is also constant time.
+However, this implementation is very memory hungry. Also, having a
+vector of NodeTypes is also very memory hungry, however storing the
+data allowed the infornation to be very accessible when querying but
+also did not hurt the index speed too much. If less memory could be
+utilized, I would change my structures by making the vectors into
+LinkedLists. This way, there would be less wasted space in memory.
+
+Errors and bugs and testing:
+When dealing with my code, the majority of my pre-compile issues
+had to deal with the fact that I was trying to use a LinkedList
+template with two nodetypes to hold all of the needed info. I 
+quickly realized that this would not work because it caused the
+struct to have a circular inclusion error with the class. Because
+of this I did some research and found the vector class in the std
+library. This helped my code not only compile but also allowed me
+to only use one struct, which helped to save memory.
+
+When running, the main issue in performing the execution was that
+the large Gutenberg kept killing on input. This became quite an
+aggravating issue as there didn't seem to be much sense to it. It
+eventually turned out that this was solely because the Halligan
+servers were getting overwhelmed. 
+
+After the executions worked, the next error to fix was errors in
+the output. I was able to decipher these using a pipe to an 
+output file and comparing it to given output files from Halligan.
+Through this, I was able to realize formatting cases such as
+the fact that there should be no new line after query?. Also,
+I realized that I needed to make sure I only performed case
+insensitive searches when the specific word calls were used.
+After making these fixes, the code matched the output given
+when both were sorted.
+
+***NOTE***
+On medium Gutenberg, there were two lines which had query next
+to it in the test output but not my output. I believe this is
+because the order in which the files were inputted and where
+they were inputted affected the first line to be outputted.
+Therefore I feel this is not an error but should be noted
+when running the tests to compare the outputs.
+
